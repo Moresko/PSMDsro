@@ -1,0 +1,2 @@
+# PSMDsro
+ stranka pre firmu
