@@ -1,0 +1,33 @@
+.navigator{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem ;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+}
+
+.nav-menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.nav-item{
+    margin-left: 5rem;
+}
+
+.nav-link{
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: black;
+}
+
+.nav-link:hover{
+    color: red;
+}
+
+.nav-logo img{
+    height: 2rem;
+}
