@@ -1,22 +1,18 @@
 import React from "react";
 import '../css/header.css';
-import LG from '../img/logo.png';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { NavLink } from 'react-router-dom'; 
 
 const Header = () => {
     return (
-        <nav className="navigator">
-            <a href="/home" className="nav-logo">
-                <img src={LG} className="LogoImg" alt="Logo" />
-            </a>
-            <ul className="nav-menu">
+        <nav className="navbar-cont">
+            <ul>
                 <li className="nav-item">
                     <NavLink 
                         to="/home" 
                         className="nav-link" 
-                        activeClassName="active" // Class for active link
+                        activeClassName="active" 
                     >
-                        Domov
+                        DOMOV
                     </NavLink>
                 </li>
                 <li className="nav-item">
@@ -25,7 +21,7 @@ const Header = () => {
                         className="nav-link" 
                         activeClassName="active"
                     >
-                        Doma Maľované
+                        DOMA MAĽOVANÉ
                     </NavLink>
                 </li>
                 <li className="nav-item">
@@ -34,7 +30,7 @@ const Header = () => {
                         className="nav-link" 
                         activeClassName="active"
                     >
-                        Reality
+                        REALITY
                     </NavLink>
                 </li>
                 <li className="nav-item">
@@ -43,11 +39,11 @@ const Header = () => {
                         className="nav-link" 
                         activeClassName="active"
                     >
-                        Kontakt
+                        KONTAKT
                     </NavLink>
                 </li>
             </ul>
-        </nav>
+      </nav>
     );
 };
 
