@@ -1,14 +1,12 @@
 import React from "react";
 import '../css/menuPage.css';
 import Header from '../components/header';
-import Up from '../components/up';
 
 const Menu = () => {
   return (
     <div className="page-container">
       <header>
           <Header/>
-          <Up/>
       </header>
       <h1>Hello</h1>
     </div>
