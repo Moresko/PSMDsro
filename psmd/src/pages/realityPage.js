@@ -274,7 +274,7 @@ const Reality = () => {
 
       <div className="Grey">
         <div className="why-us-section">
-          <h1>Why us?</h1>
+          <h1>Prečo práve my?</h1>
           <div className="circle-row">
             <div className="circle-groups">
               <div className="circle-green">
