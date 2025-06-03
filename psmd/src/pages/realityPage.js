@@ -1,19 +1,53 @@
 import React, { useEffect, useState } from 'react';
+import { auth, db } from '../components/firebase'; 
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import Header from '../components/header';
 import '../css/realityPage.css';
+import mp from '../img/back.jpg';
+import { PiHandshake } from "react-icons/pi";
+import { SlBriefcase } from "react-icons/sl";
+import { HiOutlineDocumentCheck } from "react-icons/hi2";
 
 const Reality = () => {
   const [houses, setHouses] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [isAdmin, setIsAdmin] = useState(true); // TEMP: assume admin, update this logic later
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [img, setImg] = useState(null);
   const [editingHouse, setEditingHouse] = useState(null);
 
   const itemsPerSlide = 3;
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log('User is logged in:', user.uid, user.email);
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists() && docSnap.data().role === 'admin') {
+            console.log('User is admin');
+            setIsAdmin(true);
+          } else {
+            console.log('User is not admin');
+            setIsAdmin(false);
+          }
+        } catch (error) {
+          console.error('Error checking user role:', error);
+          setIsAdmin(false);
+        }
+      } else {
+        console.log('No user is logged in');
+        setIsAdmin(false);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const fetchHouses = async () => {
     try {
@@ -54,15 +88,18 @@ const Reality = () => {
   };
 
   const handleEdit = (house) => {
+    if (!isAdmin) return;
     console.log('Editing house:', house);
     setTitle(house.title);
     setDesc(house.desc);
-    setImg(null); // Image file will be reselected if changed
+    setImg(null);
     setEditingHouse(house);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!isAdmin) return;
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('desc', desc);
@@ -129,8 +166,8 @@ const Reality = () => {
   return (
     <div>
       <Header />
-
       <div className="reality-back">
+        <img src={mp} alt="Main page background" />
         <div className="white-box">
           <div className="text-content">
             <h1>Pripravení nájsť svoj nový domov?</h1>
@@ -145,11 +182,11 @@ const Reality = () => {
 
       <div className="r-cont">
         <h1>Ponuka bytov</h1>
-        <p style={{ color: 'green' }}>Admin status: {isAdmin ? 'Yes' : 'No'}</p>
-
         {isAdmin && (
           <div className="admin-house-form">
-            <h3>{editingHouse ? 'Upraviť nehnuteľnosť' : 'Pridať novú nehnuteľnosť'}</h3>
+            <h3>
+              {editingHouse ? 'Upraviť nehnuteľnosť' : 'Pridať novú nehnuteľnosť'}
+            </h3>
             <form onSubmit={handleFormSubmit}>
               <input
                 type="text"
@@ -173,7 +210,11 @@ const Reality = () => {
               />
               <button type="submit">{editingHouse ? 'Upraviť' : 'Pridať'}</button>
               {editingHouse && (
-                <button type="button" onClick={cancelEdit} style={{ marginLeft: '10px' }}>
+                <button
+                  type="button"
+                  onClick={cancelEdit}
+                  style={{ marginLeft: '10px' }}
+                >
                   Zrušiť
                 </button>
               )}
@@ -182,7 +223,11 @@ const Reality = () => {
         )}
 
         <div className="house-slider-multi">
-          <button className="arrow left" onClick={prevSlide} disabled={total === 0}>
+          <button
+            className="arrow left"
+            onClick={prevSlide}
+            disabled={total === 0}
+          >
             ❮
           </button>
 
@@ -199,10 +244,16 @@ const Reality = () => {
                 </button>
                 {isAdmin && (
                   <>
-                    <button className="delete-button" onClick={() => handleDelete(house.id)}>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(house.id)}
+                    >
                       Odstrániť
                     </button>
-                    <button className="edit-button" onClick={() => handleEdit(house)}>
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEdit(house)}
+                    >
                       Upraviť
                     </button>
                   </>
@@ -211,18 +262,39 @@ const Reality = () => {
             ))}
           </div>
 
-          <button className="arrow right" onClick={nextSlide} disabled={total === 0}>
+          <button
+            className="arrow right"
+            onClick={nextSlide}
+            disabled={total === 0}
+          >
             ❯
           </button>
         </div>
       </div>
 
       <div className="Grey">
-        <h1>Why us?</h1>
-        <div className="grey-row">
-          <h1>HELLO</h1>
-          <h1>HELLO</h1>
-          <h1>HELLO</h1>
+        <div className="why-us-section">
+          <h1>Why us?</h1>
+          <div className="circle-row">
+            <div className="circle-groups">
+              <div className="circle-green">
+                <PiHandshake className="icon-circle" />
+              </div>
+              <p>Nechajte to na nás – vyjednáme pre vás tú najlepšiu cenu.</p>
+            </div>
+            <div className="circle-groups">
+              <div className="circle-green">
+                <SlBriefcase className="icon-circle" />
+              </div>
+              <p>Pôsobíme na realitnom trhu už viac ako 10 rokov.</p>
+            </div>
+            <div className="circle-groups">
+              <div className="circle-green">
+                <HiOutlineDocumentCheck className="icon-circle" />
+              </div>
+              <p>Keď nájdeme vhodnú nehnuteľnosť, pripravíme všetky potrebné dokumenty.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
