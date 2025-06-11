@@ -8,8 +8,13 @@ const Contact = () => {
         <header>
             <Header/>
         </header>
-        <div>
-            <h1>Kkokt</h1>
+        <div className="contact-start">
+            <div className="contact-box">
+              <h1>Reality</h1>
+            </div>
+            <div className="contact-box">
+              <h1>Doma maľované</h1>
+            </div>
         </div>
    </div>
   );

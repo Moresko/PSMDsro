@@ -280,23 +280,29 @@ const Reality = () => {
               <div className="circle-green">
                 <PiHandshake className="icon-circle" />
               </div>
+              <h3>Dok</h3>
               <p>Nechajte to na nás – vyjednáme pre vás tú najlepšiu cenu.</p>
             </div>
             <div className="circle-groups">
               <div className="circle-green">
                 <SlBriefcase className="icon-circle" />
               </div>
+              <h3>Dok</h3>
               <p>Pôsobíme na realitnom trhu už viac ako 10 rokov.</p>
             </div>
             <div className="circle-groups">
               <div className="circle-green">
                 <HiOutlineDocumentCheck className="icon-circle" />
               </div>
+              <h3>Dok</h3>
               <p>Keď nájdeme vhodnú nehnuteľnosť, pripravíme všetky potrebné dokumenty.</p>
             </div>
           </div>
         </div>
       </div>
+      <footer>
+        <p>© Copyright 2025 Martin Mores - All right reserved</p>
+      </footer>
     </div>
   );
 };

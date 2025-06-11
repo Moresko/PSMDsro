@@ -5,7 +5,7 @@
   
   body {
     margin: 0;
-    background-color:white;
+    background-color: #F3F3F3;
   }
 
   html{
@@ -29,6 +29,11 @@
     font-family: 'DM Sans', sans-serif;
     font-weight: 200;
   }
+
+footer{
+  align-items: center;
+  text-align: center;
+}
 
   
 

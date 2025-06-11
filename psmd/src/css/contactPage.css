@@ -1,0 +1,9 @@
+.contact-start{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.contact-box{
+    
+}
